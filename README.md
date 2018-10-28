@@ -13,28 +13,28 @@ Let Fk denote the set of frequent k-itemsets. Each itemset w is of the following
 
 2. Makes the first pass over the data using the function init-pass(), which takes two arguments the data set T and the sorted items M, to produce the seeds L for generating candidate itemsets of length 2, i.e., C2. init-pass() has two steps:
 
-a) It first scans the data once to record the support count of each item.
+  a) It first scans the data once to record the support count of each item.
 
-b) It then follows the sorted order to find the first item i in M that meets MIS(i).
+  b) It then follows the sorted order to find the first item i in M that meets MIS(i).
 
 3. i is inserted into L. 
 
-For each subsequent item j in M after i, 
+  For each subsequent item j in M after i, 
 
-if j.count/n  MIS(i), then j is also inserted into L, where j.count is the support count of j, and n is the total number of transactions in T.
+  if j.count/n  MIS(i), then j is also inserted into L, where j.count is the support count of j, and n is the total number of transactions in T.
 
-Frequent 1-itemsets (F1) are obtained from L. 
+  Frequent 1-itemsets (F1) are obtained from L. 
 
-For each subsequent pass (or data scan), say pass k, the algorithm performs three operations.
+  For each subsequent pass (or data scan), say pass k, the algorithm performs three operations.
 
-a) The frequent itemsets in Fk-1 found in the (k–1)th pass are used to generate the candidates Ck using the MScandidate-gen() function.
-However, there is a special case, i.e., when k = 2 (line 6), for which the candidate generation function is different, i.e., level2-candidate-gen().
+    a) The frequent itemsets in Fk-1 found in the (k–1)th pass are used to generate the candidates Ck using the MScandidate-gen() function.
+    However, there is a special case, i.e., when k = 2 (line 6), for which the candidate generation function is different, i.e., level2-candidate-gen().
 
-b) It then scans the data and updates various support counts of the candidates in Ck (line 9–16). For each candidate c, we need to update its support count (lines 11–12) and also the support count of c without the first item, i.e., c – {c[1]}, which is used in rule generation. 
+    b) It then scans the data and updates various support counts of the candidates in Ck (line 9–16). For each candidate c, we need to update its support count (lines 11–12) and also the support count of c without the first item, i.e., c – {c[1]}, which is used in rule generation. 
 
-c) The frequent itemsets (Fk) for the pass are identified by {c  Ck | c.count/n  MIS(c[1])}
+    c) The frequent itemsets (Fk) for the pass are identified by {c  Ck | c.count/n  MIS(c[1])}
 
-Candidate generation functions level2-candidate-gen() and MScandidate-gen() are mentioned below.
+#### Candidate generation functions level2-candidate-gen() and MScandidate-gen() are mentioned below.
 
 ### Level2-candidate-gen function: 
 It takes an argument L, and returns a superset of the set of all frequent 2-itemsets. 
